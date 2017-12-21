@@ -5,23 +5,22 @@ import { Gyrate } from "./gyrate"; // ✈️
 import { Attractor } from "./attractor"; // ☀️
 
 const app = p => {
-  let attractors = [];
-  let gyrate;
+  let [attractor, gyrate] = [null, []];
 
   p.setup = _ => {
     p.createCanvas(p.windowWidth, p.windowHeight);
-    const whiteColor = 255;
-    p.background(whiteColor);
+    p.background(10);
 
-    for (let i = 0; i < 1; i++) {
-      attractors.push(new Attractor(p));
+    attractor = new Attractor(p);
+    for (let i = 0; i < 5; i++) {
+      gyrate.push(new Gyrate(p));
     }
-    gyrate = new Gyrate(p);
   };
 
   p.draw = _ => {
-    gyrate.show();
-    attractors.forEach(attractor => {
+    p.background(10);
+
+    gyrate.forEach(gyrate => {
       const forceV = attractor.attract(gyrate);
       gyrate.applyForce(forceV).show();
       attractor.move().show();

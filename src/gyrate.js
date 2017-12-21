@@ -2,9 +2,11 @@ class Gyrate {
   constructor(p) {
     this._p = p;
     this.location = p.createVector(p.random(p.width), p.random(p.height));
-    this.velocity = p.createVector(5, 0);
+    this.velocity = p.createVector(0, 0);
     this.acceleration = p.createVector(0, 0);
-    this.mass = 15;
+    this.color = [p.random(90, 255), p.random(90, 255), p.random(90, 255)];
+    this.mass = 12;
+    this.size = p.random(8, 16);
   }
 
   applyForce(force) {
@@ -19,8 +21,8 @@ class Gyrate {
   show() {
     const p = this._p;
     p.noStroke();
-    p.fill(85);
-    p.ellipse(this.location.x, this.location.y, 5, 5);
+    p.fill(this.color);
+    p.ellipse(this.location.x, this.location.y, this.size);
   }
 }
 
