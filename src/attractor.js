@@ -4,37 +4,36 @@ class Attractor {
     this.location = p.createVector(p.random(p.width), p.random(p.height));
     this._perlinTimeX = p.random(50);
     this._perlinTimeY = p.random(51, 100);
+    this._G = 1;
+    this.mass = 5;
+  }
+
+  attract(gyrate) {
+    const p = this._p;
+    const gravitationV = this.location.copy().sub(gyrate.location);
+    const distance = p.constrain(gravitationV.magSq(), 10, 25);
+    const gravitationMag = this.mass * gyrate.mass / gravitationV.magSq();
+    gravitationV.mult(gravitationMag);
+
+    return gravitationV;
   }
 
   move() {
     const p = this._p;
-
-    const newLocationX = p.map(
-      p.noise(this._perlinTimeX),
-      0,
-      1,
-      0,
-      p.width
-    );
-    const newLocationY = p.map(
-      p.noise(this._perlinTimeY),
-      0,
-      1,
-      0,
-      p.height
-    );
+    const newLocationX = p.map(p.noise(this._perlinTimeX), 0, 1, 0, p.width);
+    const newLocationY = p.map(p.noise(this._perlinTimeY), 0, 1, 0, p.height);
     this.location.set(newLocationX, newLocationY);
-    this._perlinTimeX += 0.003;
-    this._perlinTimeY += 0.003;
-    return this
+    this._perlinTimeX += 0.0005;
+    this._perlinTimeY += 0.0005;
+    return this;
   }
 
   show() {
     const p = this._p;
-
-    p.fill(255);
+    p.noStroke();
+    p.fill(1, 0);
     p.ellipse(this.location.x, this.location.y, 20, 20);
-    return this
+    return this;
   }
 }
 
